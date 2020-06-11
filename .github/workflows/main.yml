@@ -11,9 +11,26 @@ jobs:
         uses: actions/checkout@v2
       - name: Example image
         run: ./kas-docker --isar build kas-iot2050-example.yml
+      - name: Pack artifacts
+        run: |
+          cd build/tmp/deploy/images/iot2050
+          tar -cJf ~/iot2050-example-image.tar.xz iot2050-image-example-isar-iot2050.wic.img*
       - name: RT-Example image
         run: ./kas-docker --isar build kas-iot2050-example.yml:kas/opt/preempt-rt.yml
-
+      - name: Pack artifacts
+        run: |
+          cd build/tmp/deploy/images/iot2050
+          tar -cJf ~/iot2050-example-image-rt.tar.xz iot2050-image-example-isar-iot2050.wic.img*
+      - name: Upload example image
+        uses: actions/upload-artifact@v2
+        with:
+          name: iot2050-example-image
+          path: ~/iot2050-example-image.tar.xz
+      - name: Upload RT example image
+        uses: actions/upload-artifact@v2
+        with:
+          name: iot2050-example-image-rt
+          path: ~/iot2050-example-image-rt.tar.xz
   bootloaders:
     name: Bootloaders
     runs-on: ubuntu-latest
@@ -24,3 +41,8 @@ jobs:
         run: ./kas-docker --isar build kas-iot2050-boot-basic.yml
       - name: Advanced
         run: ./kas-docker --isar build kas-iot2050-boot-advanced.yml
+      - name: Archive bootloaders
+        uses: actions/upload-artifact@v2
+        with:
+          name: iot2050-bootloaders
+          path: build/tmp/deploy/images/iot2050/*.bin
