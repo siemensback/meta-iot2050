@@ -3,8 +3,8 @@ name: CI
 on: [push]
 
 jobs:
-  images:
-    name: Images
+  debian-images:
+    name: Debian images
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,6 +23,15 @@ jobs:
         with:
           name: iot2050-example-image-rt
           path: build/tmp/deploy/images/iot2050/iot2050-image-example-iot2050-debian-iot2050.wic.img*
+
+  ubuntu-image:
+    name: Ubuntu image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Ubuntu example image
+        run: ./kas-docker build kas-iot2050-example.yml:kas/opt/ubuntu.yml
 
   bootloaders:
     name: Bootloaders
