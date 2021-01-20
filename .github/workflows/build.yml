@@ -40,13 +40,13 @@ jobs:
           name: iot2050-example-image-rt
           path: build/tmp/deploy/images/iot2050/iot2050-image-example-isar-iot2050.wic.img*
     
-    sdk:
+  sdk:
     name: Sdk
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: sdk
+      - name: iot2050_sdk
         run: ./kas-container build kas/iot2050.yml:kas/opt/sdk.yml:kas/opt/package-lock.yml
       - name: Upload sdk
         uses: actions/upload-artifact@v2
