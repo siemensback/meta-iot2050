@@ -1,6 +1,8 @@
 name: iot2050_CI
 
 on:
+  schedule:
+    - cron: '0 8 */2 * *'
   watch:
     types: started
 
