@@ -1,6 +1,8 @@
 name: iot2050_CI
 
-on: [push]
+on:
+  watch:
+    types: started
 
 jobs:
   bootloaders:
@@ -39,13 +41,6 @@ jobs:
         with:
           name: iot2050-example-image-rt
           path: build/tmp/deploy/images/iot2050/iot2050-image-example-isar-iot2050.wic.img*
-      - name: Lxde_image
-        run: ./kas-docker --isar build kas-iot2050-lxde.yml:kas/opt/package-lock.yml
-      - name: Upload Lxde image
-        uses: actions/upload-artifact@v2
-        with:
-          name: iot2050_lxde_image
-          path: build/tmp/deploy/images/iot2050/iot2050-image-lxde-isar-iot2050.wic.img*
     
   sdk:
     name: Sdk_build
